@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Collection</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+</head>
+
+<style type="text/css">
+    .bs-example{
+        margin: 0px;
+
+    }
+.navbar-brand{
+  font-size: 20px;
+  font-family: sans-serif;
+
+}
+h1{
+    margin-top: 100px;
+    text-align: center;
+}
+
+
+</style>
+<body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+        <a href="/" class="navbar-brand">Library Management</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav">
+                <a href="/" class="nav-item nav-link active">Home</a>
+
+
+                <!--for issuebook dropdown button-->
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Issue Book</a>
+                  <div class="dropdown-menu">
+                    <a href="viewissuedbookbystudent" class="dropdown-item">View Issued Book</a>
+                  </div>
+                </div>
+
+                <div class="navbar-nav">
+                    <a href="/logout" class="nav-item nav-link">LOGOUT</a> 
+                </div>
+            
+            </div>
+        </nav>
+    </div>
+    
+                
+    
+    <h1 class="display-5 fw-bold">Available Books</h1>
+ <br />
+ <div class="input-group container">
+   <input
+     id="search"
+     type="search"
+     class="form-control rounded"
+     placeholder="Search Book"
+     aria-label="Search"
+     aria-describedby="search-addon"
+   />
+ </div>
+</center>
+<br />
+<div class="container">
+ <table class="table">
+   <thead class="thead-dark">
+     <tr>
+       <th class="" scope="col">Book Name</th>
+       <th class="" scope="col">Author Name</th>
+       <th class="" scope="col">Category</th>
+       <th class="" scope="col">Issue</th>
+      
+     </tr>
+   </thead>
+   <tbody id="table_data">
+     {% for book in books %}
+     <tr>
+       <td>{{book.name}}</td>
+       <td>{{book.author}}</td>
+       <td>{{book.category}}</td>
+       
+       <td>
+        <!-- {% for book in books %}
+    <div>
+        <p>Title: {{ book.title }}</p>
+        <p>Author: {{ book.author }}</p>
+        <p>Age: {{ book.age }}</p>
+         Add more book details as needed -->
+    </div>
+<!-- {% endfor %} -->
+
+         <center>
+           <form method="post">
+             {% csrf_token %}
+             <input type="hidden" name="book_id" value="{{book.id}}" />
+             <button type="submit" class="btn btn-outline-success btn-sm">
+              <b><a href="viewissuedbookbystudent">Issue</a></b>
+             </button>
+
+             <!-- <input type="hidden" name="book_id" value="{{book.id}}" />
+             <button type="submit" class="btn btn-outline-success btn-sm">
+              <a href="issuebook">   <b>Return</b></a>
+             </button>
+           </form> -->
+
+          
+         
+          <!-- <form action="return_item" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="book_id" value="{{book.id}}" />
+            <button type="submit" class="btn btn-outline-success btn-sm">
+              Return
+            </button>
+          </form> -->
+        </center>
+       </td>
+     </tr>
+     {% endfor %}
+   </tbody>
+ </table>
+</div>
+<script>
+ $(document).ready(function () {
+    $("#search").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+      $("#table_data tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+      });
+    });
+  });
+ </script>
+ <!-- <script>
+   $(document).ready(function () {
+     $("#search").on("keyup", function () {
+       var value = $(this).val().toLowerCase();
+       $("#table_data tr").filter(function () {
+         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+       });
+     });
+   });
+  </script> -->
+<style>
+ table {
+   border-collapse: collapse;
+   border-spacing: 0;
+   border-radius: 10px;
+   width: 100%;
+   border: 1px solid #ddd;
+ }
+
+ th,
+ td {
+   text-align: left;
+   padding: 16px;
+ }
+
+ tr:nth-child(even) {
+   background-color: #f2f2f2;
+ }
+
+ tr:nth-child(odd) {
+   background-color: #ffffff;
+ }
+
+ .container {
+   width: 100%;
+   padding-right: 15px;
+   padding-left: 15px;
+   margin-right: auto;
+   margin-left: auto;
+ }
+
+ .input-group {
+   width: 100%;
+   margin-bottom: 1rem;
+ }
+
+ body {
+   background: linear-gradient(#87f4b5, #93cbf1);
+   background-attachment: fixed;
+   background-repeat: no-repeat;
+ }
+</style>
+
+
+</body>
+</html>
